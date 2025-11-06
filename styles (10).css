@@ -1,0 +1,328 @@
+@font-face {
+    font-family: 'Upheaval';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 100px;
+}
+
+body {
+    font-family: 'Upheaval', 'Verdana', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px;
+    
+    background-color: #4A3C32;
+    background-image: url('https://64.media.tumblr.com/ac8e62eabf0aca1078c46e656528f3ac/f208fdc993beca1b-bc/s1280x1920/0fe614f96dbf0ff4f2144a9cd3582adf5cd503fa.gifv');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+    
+    color: #F8E7D5;
+    margin: 0;
+    position: relative;
+}
+
+.game-container {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    background-color: rgba(107, 91, 76, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    
+    margin: auto;
+    max-width: fit-content;
+    border: 3px solid #6B5B4C;
+}
+
+#tetrisCanvas {
+    background-color: #2F241C;
+    border: 5px solid #D67A4F;
+    box-shadow: 0 0 15px rgba(214, 122, 79, 0.7);
+    max-height: 520px;
+    min-width: 300px;
+    border-radius: 10px;
+}
+
+.info-painel {
+    max-width: 170px; 
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 5px;
+    text-align: center;
+}
+
+.info-painel h2 {
+    color: #D67A4F;
+    text-shadow: 0 0 5px rgba(214, 122, 79, 0.3);
+}
+
+.info-painel h3, .info-painel h4, .info-painel .controls {
+    margin: 4px 0;
+    color: #F8E7D5;
+}
+
+#nextPieceCanvas {
+    width: 70px;
+    height: 70px;
+    background-color: #5A4E42;
+    border: 2px solid #D67A4F;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+button {
+    width: 100%;
+    padding: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: 'Upheaval', 'Verdana', sans-serif;
+    
+    background-color: #D67A4F;
+    color: #2F241C;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    
+    box-shadow: 0 4px 0 0 #A05244;
+    transition: background-color 0.1s ease, transform 0.1s, box-shadow 0.1s;
+}
+
+button:hover {
+    background-color: #BF6A42;
+}
+
+button:active {
+    box-shadow: 0 1px 0 0 #A05244;
+    transform: translateY(3px);
+}
+
+button:disabled {
+    background-color: #8C7B70;
+    color: #D3C4B6;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.highscores-list {
+    width: 100%;
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid #D67A4F;
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.highscores-list h4 {
+    color: #D67A4F;
+    text-shadow: 0 0 5px rgba(214, 122, 79, 0.3);
+}
+
+#topScoresList {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    counter-reset: score-rank;
+}
+
+#topScoresList li {
+    padding: 1px 0;
+    font-size: 0.9em;
+    color: #F8E7D5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#topScoresList li::before {
+    counter-increment: score-rank;
+    content: counter(score-rank) ". ";
+    font-weight: bold;
+    color: #C0985A;
+    margin-right: 5px;
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(47, 36, 28, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.overlay-content {
+    background-color: #F8E7D5;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 8px 8px 0 0 #4A3C32;
+    max-width: 400px;
+    text-align: center;
+    color: #4A3C32;
+    border: 3px solid #D67A4F;
+}
+
+.overlay-content h3 {
+    color: #D67A4F;
+    text-shadow: none;
+}
+
+.overlay-content p, .overlay-content ul {
+    color: #4A3C32;
+}
+
+.overlay-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.overlay-content li {
+    padding: 5px 0;
+    color: #D67A4F;
+}
+
+.overlay-content button {
+    margin-top: 20px;
+}
+
+.developers {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #6B5B4C;
+}
+
+.developers a {
+    color: #D67A4F;
+    text-decoration: none;
+}
+
+.overlay-content.name-prompt {
+    max-width: 350px; 
+}
+
+.overlay-content.name-prompt h3 {
+    color: #D67A4F;
+}
+
+.overlay-content.name-prompt p {
+    color: #4A3C32;
+}
+
+#playerNameInput {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 2px solid #D67A4F;
+    border-radius: 8px;
+    font-size: 1em;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #FFF;
+    color: #4A3C32;
+    font-family: 'Upheaval', 'Verdana', sans-serif;
+}
+
+#playerNameInput:focus {
+    border-color: #BF6A42;
+    outline: none;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.name-prompt button {
+    flex-grow: 1;
+    padding: 10px 15px;
+}
+.main-button {
+    background-color: #D67A4F;
+    color: #F8E7D5;
+    box-shadow: 0 4px 0 0 #A05244;
+}
+
+.main-button:hover {
+    background-color: #45a049;
+}
+
+.main-button:active {
+    box-shadow: 0 1px 0 0 #A05244;
+}
+
+.secondary-button {
+    background-color: #6B5B4C;
+    color: #F8E7D5;
+    box-shadow: 0 4px 0 0 #5A4E42;
+}
+
+.secondary-button:hover {
+    background-color: #5A4E42;
+}
+
+.secondary-button:active {
+    box-shadow: 0 1px 0 0 #5A4E42;
+}
+/* === ESTILOS EASTER EGG === */
+#easterEggTrigger {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#easterEggTrigger:hover {
+    color: #F8E7D5;
+    transform: scale(1.1);
+}
+
+.emoji-art {
+    font-size: 1.5em;
+    margin: 15px 0;
+    line-height: 1.2;
+    color: #D67A4F;
+}
+
+#easterEggOverlay button {
+    background-color: #6B5B4C;
+    color: #F8E7D5;
+    box-shadow: 0 4px 0 0 #4A3C32;
+}
+
+#easterEggOverlay button:hover {
+    background-color: #5A4E42;
+}
+
+.floating-cup {
+    display: none; 
+    position: absolute; 
+    z-index: 99; 
+    width: 40px; 
+    height: 40px;
+    top: 30%;
+    
+    right: calc(50% + 460px);
+    
+    transform: translateY(-50%); 
+}
+/* === FIM ESTILOS EASTER EGG === */
